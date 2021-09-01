@@ -1,0 +1,135 @@
+@border-color: #eee;
+@arrow-color:#aaa;
+
+//移动端1px边框修复
+.mixin-border() {
+    position: relative;
+    line-height: normal;
+
+    &:before {
+        content: '';
+        position: absolute;
+        transform-origin: 0 0;
+        box-sizing: border-box;
+    }
+}
+
+//左边框
+.mixin-border-left(@width: 1px,@rgb: @border-color,@type: solid) {
+    .mixin-border();
+
+    &:before {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: @width;
+        border-left: @width @type @rgb;
+        transform: scaleX(0.5);
+    }
+}
+
+//右边框
+.mixin-border-right(@width: 1px,@rgb: @border-color,@type: solid) {
+    .mixin-border();
+
+    &:before {
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: @width;
+        border-right: @width @type @rgb;
+        transform: scaleX(0.5);
+    }
+}
+
+//上边框
+.mixin-border-top(@width: 1px,@rgb: @border-color,@type: solid) {
+    .mixin-border();
+
+    &:before {
+        top: 0;
+        left: 0;
+        right: 0;
+        height: @width;
+        border-top: @width @type @rgb;
+        transform: scaleY(0.5);
+    }
+}
+
+//下边框
+.mixin-border-bottom(@width: 1px,@rgb: @border-color,@type: solid) {
+    .mixin-border();
+
+    &:before {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: @width;
+        border-bottom: @width @type @rgb;
+        transform: scaleY(0.5);
+    }
+}
+
+.mixin-arrow() {
+    position: relative;
+    font-size: 0;
+    border-style: solid;
+
+    &:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+    }
+}
+
+.mixin-arrow-left(@size: 9px,@color: @arrow-color,@maskcolor: #fff) {
+    .mixin-arrow();
+    border-width: @size @size @size 0;
+    border-color: transparent @color transparent;
+
+    &:after {
+        left: 2px;
+        top: -@size;
+        border-width: @size @size @size 0;
+        border-color: transparent @maskcolor transparent;
+    }
+}
+
+.mixin-arrow-right(@size: 9px,@color: @arrow-color,@maskcolor: #fff) {
+    .mixin-arrow();
+    border-width: @size 0 @size @size;
+    border-color: transparent transparent transparent @color;
+
+    &:after {
+        right: 2px;
+        top: -@size;
+        border-width: @size 0 @size @size;
+        border-color: transparent transparent transparent @maskcolor;
+    }
+}
+
+.mixin-arrow-up(@size: 9px,@color: @arrow-color,@maskcolor: #fff) {
+    .mixin-arrow();
+    border-width: 0 @size @size;
+    border-color: transparent transparent @color;
+
+    &:after {
+        left: -@size;
+        top: 2px;
+        border-width: 0 @size @size;
+        border-color: transparent transparent @maskcolor;
+    }
+}
+
+.mixin-arrow-down(@size: 9px,@color: @arrow-color,@maskcolor: #fff) {
+    .mixin-arrow();
+    border-width: @size @size 0;
+    border-color: @color transparent transparent;
+
+    &:after {
+        left: -@size;
+        bottom: 2px;
+        border-width: @size @size 0;
+        border-color: @maskcolor transparent transparent;
+    }
+}

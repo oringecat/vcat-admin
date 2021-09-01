@@ -1,0 +1,115 @@
+﻿/*!
+* ©teamwei.com
+* author: teamwei
+* date: 2021-08-30
+*/
+
+.cat-tabbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid #f2f2f2;
+    padding-top: 8px;
+
+    &__arrow {
+        line-height: 0;
+        padding: 0 16px;
+        cursor: pointer;
+        color: #999;
+
+        .el-icon {
+            font-size: 16px;
+        }
+
+        &:hover {
+            color: #000;
+        }
+    }
+
+    &__container {
+        flex: 1;
+        overflow: hidden;
+
+        &:first-child {
+            margin: 0 20px;
+        }
+    }
+
+    &__list {
+        display: flex;
+        white-space: nowrap;
+        transition: transform 200ms;
+    }
+
+    &__item {
+        display: flex;
+        align-items: stretch;
+        height: 40px;
+        cursor: pointer;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+
+        .tab-text {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 20px;
+            color: #777;
+            // 既是最后一个，又是第一个
+            &:last-child:first-child {
+                padding-right: 20px;
+            }
+        }
+
+        .tab-close {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 100%;
+            font-size: 16px;
+            color: #313b46;
+
+            svg {
+                transition: color 200ms;
+            }
+
+            svg:hover {
+                color: red !important;
+            }
+        }
+
+        &:not(.is-active) {
+            .tab-close {
+                width: 20px;
+                font-size: 0;
+                transition: width 200ms;
+            }
+
+            &:hover {
+                background-color: #eee;
+
+                .tab-text {
+                    color: #313b46;
+                }
+
+                .tab-close {
+                    width: 40px;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    &__item.is-active {
+        background-color: #313b46;
+
+        .tab-text {
+            color: #fff;
+        }
+
+        .tab-close {
+            color: #fff;
+        }
+    }
+}

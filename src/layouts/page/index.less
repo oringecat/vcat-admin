@@ -1,0 +1,46 @@
+﻿.cat-page {
+    display: flex;
+    height: 100%;
+
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        color: #fff;
+        background-color: #313b46;
+    }
+
+    @media screen and (max-width: 576px) {
+        &__sidebar {
+            display: none;
+        }
+    }
+
+    &__container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-x: auto;
+
+        .header {
+            z-index: 1;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,.15);
+        }
+
+        .main {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #e7ebed;
+        }
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        will-change: opacity;
+        pointer-events: none;
+        transition: opacity 100ms;
+    }
+
+    .fade-enter-from, .fade-leave-to {
+        opacity: 0;
+    }
+}
