@@ -1,4 +1,2 @@
-﻿import { Product } from "./product";
-import { ProductService } from "./service";
-
-export { Product, ProductService };
+﻿export * from "./product";
+export * from "./service";

@@ -1,6 +1,6 @@
 ﻿<template>
     <cat-view class="admin-edit">
-        编辑
+        AdminEdit
     </cat-view>
 </template>
 

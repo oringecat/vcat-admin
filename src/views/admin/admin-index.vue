@@ -1,14 +1,27 @@
 ﻿<template>
     <cat-view class="admin-index">
-        首页
+        AdminIndex
+        <el-button @click="toEdit">编辑</el-button>
     </cat-view>
 </template>
 
 <script lang="ts">
     import { defineComponent } from "vue";
+    import { useRouter } from "vue-router";
 
     export default defineComponent({
-        name: "AdminIndex"
+        name: "AdminIndex",
+        setup() {
+            const router = useRouter();
+
+            const toEdit = () => {
+                router.replace({ name: "AdminEdit" });
+            }
+
+            return {
+                toEdit
+            }
+        }
     });
 </script>
 

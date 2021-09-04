@@ -14,7 +14,7 @@ interface IAdmin {
     passwordHash?: string;
 }
 
-class Admin extends Model<IAdmin> {
+class Admin extends Model<IAdmin> implements IAdmin {
     id = 0;
     account = "";
     password = "";

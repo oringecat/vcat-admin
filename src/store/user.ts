@@ -6,81 +6,59 @@
 
 import { Module } from "vuex";
 import { IGlobalState } from "./interface";
-
-interface ILoginInfo {
-  id: number;
-  account: string;
-  realname: string;
-  token: string;
-}
+import { appStorage, localData, sessionData } from "@/lib/storage";
 
 interface IUserState {
-  loginInfo: ILoginInfo;
+    loginInfo: typeof appStorage.loginInfo;
 }
 
-const getStorage = () => {
-  const storage =
-    localStorage.getItem("loginInfo") ||
-    sessionStorage.getItem("loginInfo") ||
-    "{}";
-  return JSON.parse(storage) as ILoginInfo;
-};
-
-const setStorage = (value: ILoginInfo, autoLogin = false) => {
-  if (autoLogin) {
-    localStorage.setItem("loginInfo", JSON.stringify(value));
-  } else {
-    sessionStorage.setItem("loginInfo", JSON.stringify(value));
-  }
-};
-
-//Module接受两个参数，第一个为自身state类型，第二个为根state类型
+// Module接受两个参数，第一个为自身state类型，第二个为根state类型
 const user: Module<IUserState, IGlobalState> = {
-  namespaced: true,
-  state: {
-    loginInfo: getStorage(),
-  },
-  getters: {
-    loginInfo: (state) => state.loginInfo,
-  },
-  mutations: {
-    //保存登陆信息
-    SET_LOGIN_INFO: (state, value) => {
-      state.loginInfo = value;
-      setStorage(value);
+    namespaced: true,
+    state: {
+        loginInfo: localData.get("autoLogin") ? localData.get("loginInfo") : sessionData.get("loginInfo")
     },
-    //更新登陆信息
-    UPDATE_LOGIN_INFO: (state, value) => {
-      state.loginInfo = {
-        ...state.loginInfo,
-        ...value,
-      };
-      setStorage(state.loginInfo);
+    getters: {
+        loginInfo: (state) => state.loginInfo,
     },
-    //退出登录
-    LOGOUT: (state, callback: () => void) => {
-      state.loginInfo = {
-        id: 0,
-        account: "guest",
-        realname: "访客",
-        token: "",
-      };
-      localStorage.removeItem("loginInfo");
-      sessionStorage.removeItem("loginInfo");
-      callback && callback();
+    mutations: {
+        UPDATE_LOGIN_INFO: (state, value) => {
+            state.loginInfo = { ...state.loginInfo, ...value };
+            if (localData.get("autoLogin")) {
+                localData.set("loginInfo", state.loginInfo);
+            } else {
+                sessionData.set("loginInfo", state.loginInfo);
+            }
+        },
+        LOGOUT: (state, callback: () => void) => {
+            state.loginInfo = appStorage.loginInfo;
+            localData.remove("loginInfo");
+            sessionData.remove("loginInfo");
+            sessionData.remove("routerMap");
+            callback && callback();
+        },
     },
-  },
-  actions: {
-    setLoginInfo: (context, value) => {
-      context.commit("SET_LOGIN_INFO", value);
+    actions: {
+        // 修改登录信息
+        updateLoginInfo: (context, value) => {
+            context.commit("UPDATE_LOGIN_INFO", value);
+        },
+        // 登录
+        login: (context, value) => {
+            localData.remove("loginInfo");
+            context.commit("UPDATE_LOGIN_INFO", value);
+        },
+        // 自动登录
+        autoLogin: (context, value) => {
+            localData.set("autoLogin", true);
+            context.commit("UPDATE_LOGIN_INFO", value);
+        },
+        // 退出登录
+        logout: (context, callback: () => void) => {
+            localData.set("autoLogin", false);
+            context.commit("LOGOUT", callback);
+        },
     },
-    updateLoginInfo: (context, value) => {
-      context.commit("UPDATE_LOGIN_INFO", value);
-    },
-    logout: (context, callback: () => void) => {
-      context.commit("LOGOUT", callback);
-    },
-  },
 };
 
 export { IUserState, user };

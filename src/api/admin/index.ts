@@ -1,4 +1,3 @@
-﻿import { Admin } from "./admin";
-import { AdminService } from "./service";
-
-export { Admin, AdminService };
+﻿export * from "./admin";
+export * from "./admin-route";
+export * from "./service";

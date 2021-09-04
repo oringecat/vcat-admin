@@ -21,7 +21,7 @@ interface IHistoryState {
 const router: Module<IHistoryState, IGlobalState> = {
     namespaced: true,
     state: {
-        historyPages: [], // 已访问的路由列表
+        historyPages: [], // 已访问的路由历史列表
         currentIndex: 0, // 当前历史索引位置
         excludePages: [], // 不缓存的页面列表，路由和组件的name必须相同
     },

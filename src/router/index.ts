@@ -1,13 +1,10 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { clearPending } from "@/api/service";
 import { store } from "@/store";
+import { registerRoutes } from "@/router/dynamic";
 import Page from "@/layouts/page/index.vue";
 
 const routes: Array<RouteRecordRaw> = [
-    {
-        path: "/:catchAll(.*)",
-        redirect: { name: "HomeIndex" },
-    },
     {
         path: "/login",
         name: "Login",
@@ -39,58 +36,6 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
-    {
-        path: "/product",
-        component: Page,
-        children: [
-            {
-                path: "",
-                name: "ProductIndex",
-                component: () => import("@/views/product/product-index.vue"),
-                meta: {
-                    title: "商品管理",
-                },
-            },
-            {
-                path: "detail",
-                name: "ProductDetail",
-                component: () => import("@/views/product/product-detail.vue"),
-                meta: {
-                    title: "商品详情",
-                },
-            }
-        ],
-    },
-    {
-        path: "/admin",
-        component: Page,
-        children: [
-            {
-                path: "",
-                name: "AdminIndex",
-                component: () => import("@/views/admin/admin-index.vue"),
-                meta: {
-                    title: "管理员列表",
-                },
-            },
-            {
-                path: "edit",
-                name: "AdminEdit",
-                component: () => import("@/views/admin/admin-edit.vue"),
-                meta: {
-                    title: "管理员编辑",
-                },
-            },
-            {
-                path: "role",
-                name: "AdminRole",
-                component: () => import("@/views/admin/admin-role.vue"),
-                meta: {
-                    title: "管理员角色",
-                },
-            }
-        ],
-    },
 ];
 
 const router = createRouter({
@@ -98,19 +43,33 @@ const router = createRouter({
     routes,
 });
 
-//路由跳转之前调用
+// 防止路由无限循环
+let routeFlag = false;
+
+// 路由跳转之前调用
 router.beforeEach((to, from, next) => {
     clearPending();
-    const loginInfo = store.state.user.loginInfo;
+    const token = store.state.user.loginInfo.token;
 
-    if (to.name === "Login" || to.name === "Register") {
-        if (loginInfo.token) {
-            next("/");
+    if (token) {
+        if (routeFlag) {
+            if (to.name === "Login" || to.name === "Register") {
+                next("/");
+            } else {
+                next();
+            }
         } else {
-            next();
+            // 注册动态路由
+            registerRoutes().then(() => {
+                routeFlag = true;
+                next({ ...to, replace: true });
+            }).catch(() => {
+                // 404?
+            })
         }
     } else {
-        if (loginInfo.token) {
+        routeFlag = false;
+        if (to.name === "Login" || to.name === "Register") {
             next();
         } else {
             next({

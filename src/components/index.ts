@@ -5,11 +5,12 @@
  */
 
 import { CompatVue, Component } from "vue";
+import sidebar from "./sidebar/index.vue";
 import navbar from "./navbar/index.vue";
 import tabbar from "./tabbar/index.vue";
 import scrollbar from "./scrollbar/index.vue";
 
-const components = [navbar, tabbar, scrollbar];
+const components = [sidebar, navbar, tabbar, scrollbar];
 
 const install: Component = (app: CompatVue) => {
     components.map((component) => {

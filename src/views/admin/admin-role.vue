@@ -1,6 +1,6 @@
 ﻿<template>
     <cat-view class="admin-role">
-        角色
+        AdminRole
     </cat-view>
 </template>
 

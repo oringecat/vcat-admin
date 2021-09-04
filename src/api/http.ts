@@ -6,55 +6,47 @@
 
 import { AxiosRequestConfig, Method, ResponseType } from "axios";
 import { store } from "@/store";
+import { ResponseCode } from "@/lib/models";
 import service from "./service";
 
-//状态码
-enum HttpResultCode {
-    Success = 100, //成功
-    Error = 101, //发生错误
-    Fail = 102, //失败
-    Warning = 103, //非法请求
-    Unauthorized = 201, //授权失败
-    ParameterError = 202, //参数错误
-    InvalidToken = 203, //令牌无效
-    InvalidSign = 204, //签名无效
-}
-
-//请求结果
-interface IHttpResult {
-    code: HttpResultCode;
+// 响应结果
+interface IResponse {
+    code: ResponseCode;
     message: string;
     total?: number;
     data?: any; // eslint-disable-line
 }
 
-//查询参数
-interface IQueryParams<T> {
+// 查询参数
+interface IQuery<T> {
     pageSize?: number;
     pageIndex?: number;
     takeTop?: number;
     sortBy?: { [key in keyof T | "random"]: "desc" | "asc" };
 }
 
-//请求参数
-interface IHttpParams<T> {
+// 请求参数
+interface IRequest<T = undefined> {
     responseType?: ResponseType;
-    data: T;
-    success?: (res: IHttpResult) => void;
-    fail?: (err: IHttpResult) => void;
+    data?: T | IQuery<T>;
+    success?: (res: IResponse) => void;
+    fail?: (err: IResponse) => void;
     complete?: () => void;
 }
 
-function http<T>(url: string, method: Method, params: IHttpParams<T>): void {
+/**
+ * HTTP接口请求
+ */
+function http<T>(url: string, method: Method, request: IRequest<T> = {}): void {
     const config: AxiosRequestConfig = {
         method: method,
-        responseType: params.responseType,
+        responseType: request.responseType,
     };
 
     if (["post", "POST", "put", "PUT", "patch", "PATCH"].includes(method)) {
-        config.data = params.data;
+        config.data = request.data ?? {};
     } else {
-        config.params = params.data;
+        config.params = request.data ?? {};
     }
 
     store.dispatch("app/setLoading", true); //正在加载
@@ -63,20 +55,20 @@ function http<T>(url: string, method: Method, params: IHttpParams<T>): void {
             const data = res.data;
 
             if (config.responseType === "blob") {
-                params.success && params.success(data);
+                request.success && request.success(data);
             } else {
                 switch (data.code) {
-                    case HttpResultCode.InvalidToken:
+                    case ResponseCode.InvalidToken:
                         //退出登录
                         store.dispatch("user/logout", () => {
                             window.location.reload();
                         });
                         break;
-                    case HttpResultCode.Success:
-                        params.success && params.success(data);
+                    case ResponseCode.Success:
+                        request.success && request.success(data);
                         break;
                     default:
-                        params.fail && params.fail(data);
+                        request.fail && request.fail(data);
                 }
             }
         })
@@ -85,8 +77,8 @@ function http<T>(url: string, method: Method, params: IHttpParams<T>): void {
         })
         .finally(() => {
             store.dispatch("app/setLoading", false); //加载完毕
-            params.complete && params.complete();
+            request.complete && request.complete();
         });
 }
 
-export { http, IHttpParams, IQueryParams };
+export { http, IRequest };

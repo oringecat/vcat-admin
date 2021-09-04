@@ -17,7 +17,7 @@ interface IProduct {
     }[];
 }
 
-class Product extends Model<IProduct> {
+class Product extends Model<IProduct> implements IProduct {
     id = 0;
     title = "";
     detail = "";

@@ -5,13 +5,13 @@
 <script lang="ts">
     import { defineComponent, onMounted, computed, provide } from "vue";
     import { store } from "@/store";
-    import { localData } from "@/utils/storage";
+    import { localData } from "@/lib/storage";
 
     export default defineComponent({
         name: "App",
         setup() {
             const loginInfo = computed(() => store.state.user.loginInfo);
-            //全局共享登陆信息
+            // 全局共享登陆信息
             provide("loginInfo", loginInfo);
 
             onMounted(() => {

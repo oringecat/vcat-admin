@@ -4,11 +4,11 @@ import { router } from "./router";
 import { user } from "./user";
 
 const store = createStore({
-  modules: {
-    app,
-    router,
-    user,
-  },
+    modules: {
+        app,
+        router,
+        user,
+    },
 });
 
 export { store };

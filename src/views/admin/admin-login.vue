@@ -30,7 +30,7 @@
      * date: 2021-08-01
      */
 
-    import { defineComponent, reactive, computed, nextTick } from "vue";
+    import { defineComponent, reactive, computed } from "vue";
     import { useRoute, useRouter } from "vue-router";
     import { store } from "@/store";
     import { Admin, AdminService } from "@/api/admin";
@@ -58,16 +58,14 @@
                             passwordHash: admin.getPasswordHash(),
                         },
                         success: (res) => {
-                            store.dispatch("user/setLoginInfo", res.data);
+                            store.dispatch("user/login", res.data);
 
-                            nextTick(() => {
-                                const redirect = route.query.redirect;
-                                if (redirect) {
-                                    router.replace(redirect.toString());
-                                } else {
-                                    router.replace({ name: "HomeIndex" });
-                                }
-                            });
+                            const redirect = route.query.redirect;
+                            if (redirect) {
+                                router.replace(redirect.toString());
+                            } else {
+                                router.replace({ name: "HomeIndex" });
+                            }
                         },
                         fail: (err) => {
                             admin.password = "";
@@ -80,21 +78,19 @@
             //模拟登录成功（测试用，不随生产环境发布）
             const loginSuccess = (message: string[]) => {
                 if (message.length === 0) {
-                    store.dispatch("user/setLoginInfo", {
+                    store.dispatch("user/login", {
                         id: 1001,
                         account: "teamwei",
                         realname: "超级管理员",
                         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
                     });
 
-                    nextTick(() => {
-                        const redirect = route.query.redirect;
-                        if (redirect) {
-                            router.replace(redirect.toString());
-                        } else {
-                            router.replace({ name: "HomeIndex" });
-                        }
-                    });
+                    const redirect = route.query.redirect;
+                    if (redirect) {
+                        router.replace(redirect.toString());
+                    } else {
+                        router.replace({ name: "HomeIndex" });
+                    }
                 }
             };
 
