@@ -3,6 +3,8 @@ Vue后台系统基础框架，最近空闲时间较多，正在打造一个全�
 
 ## 特性说明
 - Vue3.0 + Typescript + Vant
+- 动态路由加载
+- 路由状态控制 (页面生命周期可控)
 
 <div align="center">
   <img src="https://segmentfault.com/img/bVcUzxt" >
