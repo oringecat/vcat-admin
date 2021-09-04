@@ -28,9 +28,10 @@ export const registerRoutes = (): Promise<boolean> => {
     const routerMap: IAdminRoute[] = sessionData.get("routerMap");
 
     return new Promise((resolve, reject) => {
+        addNotFound();
+
         if (routerMap.length) {
             addRoutes(routerMap);
-            addNotFound();
             resolve(true);
         } else {
             const loading = ElLoading.service();
@@ -38,7 +39,6 @@ export const registerRoutes = (): Promise<boolean> => {
                 success: (res) => {
                     sessionData.set("routerMap", res.data);
                     addRoutes(res.data);
-                    addNotFound();
                     resolve(true);
                 },
                 fail: () => {
@@ -71,6 +71,7 @@ export const registerRoutes = (): Promise<boolean> => {
                                 component: "views/product/product-index.vue",
                                 meta: {
                                     title: "商品列表",
+                                    auth: ["delete"]
                                 },
                             },
                             {
@@ -81,6 +82,7 @@ export const registerRoutes = (): Promise<boolean> => {
                                 component: "views/product/product-detail.vue",
                                 meta: {
                                     title: "商品详情",
+                                    auth: ["upload"]
                                 },
                             }
                         ],
@@ -103,6 +105,7 @@ export const registerRoutes = (): Promise<boolean> => {
                                 component: "views/admin/admin-index.vue",
                                 meta: {
                                     title: "管理员列表",
+                                    auth: ["delete", "audit"]
                                 },
                             },
                             {
@@ -112,8 +115,9 @@ export const registerRoutes = (): Promise<boolean> => {
                                 name: "AdminEdit",
                                 component: "views/admin/admin-edit.vue",
                                 meta: {
-                                    title: "管理员编辑",
                                     hidden: true,
+                                    title: "管理员编辑",
+                                    auth: ["add", "edit"]
                                 },
                             },
                             {
@@ -131,7 +135,6 @@ export const registerRoutes = (): Promise<boolean> => {
                 ];
                 sessionData.set("routerMap", result as never);
                 addRoutes(result);
-                addNotFound();
                 resolve(true);
             }, 1000)
         }
