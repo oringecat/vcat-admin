@@ -1,11 +1,16 @@
 ﻿<template>
     <div class="cat-page">
-        <div class="cat-page__sidebar">
-            <cat-sidebar></cat-sidebar>
-        </div>
+        <cat-sidebar class="cat-page__sidebar" :is-collapse="isCollapse"></cat-sidebar>
         <div class="cat-page__container">
             <div class="header">
-                <cat-navbar></cat-navbar>
+                <cat-navbar>
+                    <template #left>
+                        <el-icon class="icon-fold-expand" title="折叠/展开" @click="isCollapse = !isCollapse">
+                            <expand v-if="isCollapse" />
+                            <fold v-else />
+                        </el-icon>
+                    </template>
+                </cat-navbar>
                 <cat-tabbar></cat-tabbar>
             </div>
             <div class="main">
@@ -28,7 +33,7 @@
      * date: 2021-08-29
      */
 
-    import { defineComponent, computed, watch } from "vue";
+    import { defineComponent,ref, computed, watch } from "vue";
     import { useRoute } from "vue-router";
     import { store } from "@/store";
 
@@ -36,7 +41,8 @@
         name: "CatPage",
         setup() {
             const route = useRoute(),
-                excludePages = computed(() => store.state.router.excludePages);
+                excludePages = computed(() => store.state.router.excludePages),
+                isCollapse = ref(false);
 
             watch(() => ({
                 name: route.name,
@@ -51,6 +57,7 @@
 
             return {
                 excludePages,
+                isCollapse,
             };
         },
     });

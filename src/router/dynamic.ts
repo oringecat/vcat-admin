@@ -4,6 +4,7 @@
 * date: 2021-09-03
 */
 
+import { RouteRecordRaw } from "vue-router";
 import router from '@/router'
 import { sessionData } from "@/lib/storage";
 import { IAdminRoute, AdminService } from "@/api/admin";
@@ -19,6 +20,39 @@ const addNotFound = () => {
         name: "NotFound",
     })
 }
+
+/**
+ * 动态添加路由
+ */
+const addRoutes = (routes: IAdminRoute[], parentName = ""): void => {
+    routes.forEach((item) => {
+        if (item.path && item.component) {
+            const componentString = item.component.replace(/^\/+/, ""), // 过滤字符串前面所有 '/' 字符
+                componentPath = componentString.replace(/\.\w+$/, ""); // 过滤后缀名，为了让 import 加入 .vue ，不然会有警告提示...
+
+            const route: RouteRecordRaw = {
+                path: item.path,
+                name: item.name,
+                component: () => import("@/" + componentPath + ".vue"),
+                meta: item.meta
+            }
+
+            if (item.redirect) {
+                if (routes.findExist("name", item.redirect)) {
+                    route.redirect = { name: item.redirect };
+                } else {
+                    route.redirect = item.redirect;
+                }
+            }
+
+            parentName ? router.addRoute(parentName, route) : router.addRoute(route);
+
+            if (item.children && item.children.length) {
+                addRoutes(item.children, item.name);
+            }
+        }
+    })
+};
 
 /**
  * 注册路由
@@ -37,9 +71,13 @@ export const registerRoutes = (): Promise<boolean> => {
             const loading = ElLoading.service();
             AdminService.getRoutes({
                 success: (res) => {
-                    sessionData.set("routerMap", res.data);
-                    addRoutes(res.data);
-                    resolve(true);
+                    if (res.data.length) {
+                        sessionData.set("routerMap", res.data);
+                        addRoutes(res.data);
+                        resolve(true);
+                    } else {
+                        reject(false);
+                    }
                 },
                 fail: () => {
                     reject(false);
@@ -49,23 +87,49 @@ export const registerRoutes = (): Promise<boolean> => {
                 }
             })
 
-            // 模拟后台请求成功
+            // 模拟后端请求数据
             window.setTimeout(() => {
                 loading.close();
                 const result = [
                     {
                         id: 1000,
                         parentId: 0,
+                        path: "/",
+                        redirect: "/index",
+                        name: "Home",
+                        component: "layouts/page/index.vue",
+                        meta: {
+                            icon: "el-icon-s-platform",
+                            title: "工作台",
+                        },
+                        children: [
+                            {
+                                id: 1003,
+                                parentId: 1000,
+                                path: "index",
+                                name: "HomeIndex",
+                                component: "views/home/home-index.vue",
+                                meta: {
+                                    title: "首页",
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        id: 1001,
+                        parentId: 0,
                         path: "/product",
+                        redirect: "ProductIndex",
                         name: "Product",
                         component: "layouts/page/index.vue",
                         meta: {
+                            icon: "el-icon-s-goods",
                             title: "商品管理",
                         },
                         children: [
                             {
-                                id: 1001,
-                                parentId: 1000,
+                                id: 1004,
+                                parentId: 1001,
                                 path: "index",
                                 name: "ProductIndex",
                                 component: "views/product/product-index.vue",
@@ -75,8 +139,8 @@ export const registerRoutes = (): Promise<boolean> => {
                                 },
                             },
                             {
-                                id: 1002,
-                                parentId: 1000,
+                                id: 1005,
+                                parentId: 1001,
                                 path: "detail",
                                 name: "ProductDetail",
                                 component: "views/product/product-detail.vue",
@@ -88,18 +152,20 @@ export const registerRoutes = (): Promise<boolean> => {
                         ],
                     },
                     {
-                        id: 1003,
+                        id: 1002,
                         parentId: 0,
                         path: "/admin",
+                        redirect: "AdminIndex",
                         name: "Admin",
                         component: "layouts/page/index.vue",
                         meta: {
+                            icon: "el-icon-s-tools",
                             title: "系统管理",
                         },
                         children: [
                             {
-                                id: 1004,
-                                parentId: 1003,
+                                id: 1006,
+                                parentId: 1002,
                                 path: "index",
                                 name: "AdminIndex",
                                 component: "views/admin/admin-index.vue",
@@ -109,8 +175,8 @@ export const registerRoutes = (): Promise<boolean> => {
                                 },
                             },
                             {
-                                id: 1005,
-                                parentId: 1003,
+                                id: 1007,
+                                parentId: 1002,
                                 path: "edit",
                                 name: "AdminEdit",
                                 component: "views/admin/admin-edit.vue",
@@ -121,8 +187,8 @@ export const registerRoutes = (): Promise<boolean> => {
                                 },
                             },
                             {
-                                id: 1006,
-                                parentId: 1003,
+                                id: 1008,
+                                parentId: 1002,
                                 path: "role",
                                 name: "AdminRole",
                                 component: "views/admin/admin-role.vue",
@@ -141,43 +207,11 @@ export const registerRoutes = (): Promise<boolean> => {
     })
 }
 
-/**
- * 动态添加路由
- */
-const addRoutes = (routes: IAdminRoute[], parentName = ""): void => {
-    routes.forEach((item) => {
-        if (item.path && item.component) {
-            const componentString = item.component.replace(/^\/+/, ""), // 过滤字符串前面所有 '/' 字符
-                componentPath = componentString.replace(/\.\w+$/, ""); // 过滤掉后缀名，为了让 import 加入 .vue ，不然会有警告提示...
-
-            const route = {
-                path: item.path,
-                redirect: item.redirect,
-                name: item.name,
-                component: () => import("@/" + componentPath + ".vue"),
-                meta: item.meta
-            }
-
-            if (parentName) {
-                // 子级路由
-                router.addRoute(parentName, route);
-            } else {
-                // 父级路由
-                router.addRoute(route);
-            }
-
-            if (item.children && item.children.length) {
-                addRoutes(item.children, item.name);
-            }
-        }
-    })
-
-};
-
 type AuthMenu = {
     path?: string;
     name?: string;
     label?: string;
+    icon?: string;
     children?: AuthMenu[]
 }
 
@@ -189,11 +223,15 @@ export const getAuthMenu = (): AuthMenu[] => {
         let result: AuthMenu[] = [];
         routes.forEach(item => {
             if (!item.meta?.hidden) {
-                const menuPath = parentPath ? `${parentPath}/${item.path}` : item.path;
+                let menuPath = item.path;
+                if (parentPath) {
+                    menuPath = [parentPath.length > 1 ? parentPath : "", "/", item.path].join("");
+                }
                 const menu: AuthMenu = {
                     path: menuPath,
                     name: item.name,
-                    label: item.meta?.title ?? item.name
+                    label: item.meta?.title ?? item.name,
+                    icon: item.meta?.icon
                 }
                 if (item.children && item.children.length) {
                     const children = filterRouter(item.children, menuPath);
@@ -237,6 +275,7 @@ const treeToList = (routes: IAdminRoute[]): IAdminRoute[] => {
         result.push(item);
 
         if (parent.children && parent.children.length) {
+            // eslint-disable-next-line
             result = [...result, ...treeToList(parent.children)]; // 递归调用
         }
     })

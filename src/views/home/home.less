@@ -1,2 +1,63 @@
-﻿.home-index {
+﻿/* 根据不同设备适配属性单位 */
+.mixin-property-rules(@property, @value, @screenWidth) {
+    @n: length(@value);
+
+    .each(@i, @parent: "") when (@i < @n + 1) {
+        @arg: extract(@value, @i);
+
+        /* 屏幕大于或等于768px的设备 */
+        .ifNumber() when (isnumber(@arg) = true) and (@screenWidth >= 768) {
+            @child: unit(@arg, px);
+        }
+        /* 屏幕小于768px的设备 */
+        .ifNumber() when (isnumber(@arg) = true) and (@screenWidth < 768) {
+            @child: unit(@arg * 2 / 100, rem);
+        }
+        /* 非数值属性 */
+        .ifNumber() when (isnumber(@arg) = false) {
+            @child: @arg;
+        }
+
+        .ifNumber();
+        @newValue: ~"@{parent} @{child}";
+
+        .ifLast() when (@i = @n) {
+            @{property}: @newValue;
+        }
+
+        .ifLast();
+        .each(@i + 1, @newValue);
+    }
+
+    .each(1);
+}
+
+.mixin-property(@property, @value) {
+    /* 屏幕大于768px的设备 */
+    @media screen and (min-width: 768px) {
+        .mixin-property-rules(@property, @value, 768);
+    }
+    /* 屏幕小于768px的设备 */
+    @media screen and (max-width: 768px) {
+        .mixin-property-rules(@property, @value, 767);
+    }
+}
+
+html {
+    font-size: 14px;
+    /* 屏幕小于768px的设备 */
+    @media screen and (max-width: 768px) {
+        font-size: ~"calc(100vw / 1536 * 100)";
+    }
+    /* 屏幕小于576px的设备 */
+    @media screen and (max-width: 576px) {
+        font-size: ~"calc(100vw / 750 * 100)";
+    }
+}
+
+.home-index {
+    .content {
+        .mixin-property(border, 5 solid #000);
+        .mixin-property(font-size, 16);
+    }
 }

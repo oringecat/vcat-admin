@@ -14,6 +14,7 @@ interface IAdminRoute {
     name?: string;
     component?: string;
     meta?: {
+        icon?: string;
         title?: string;
         auth?: string[];
         hidden?: boolean; // 不在左侧菜单中显示

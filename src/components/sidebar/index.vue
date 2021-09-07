@@ -1,19 +1,16 @@
 ﻿<template>
     <div class="cat-sidebar">
-        <div class="logo">
-            <span>后台管理系统</span>
+        <div :class="[ 'cat-sidebar__header', isCollapse && 'is-fold' ]">
+            <span class="logo">后台管理系统</span>
         </div>
-        <div class="nav">
-            <router-link :to="{ name: 'HomeIndex' }" style="color: #fff; display: block" replace>首页</router-link>
-            <router-link :to="{ name: 'ProductIndex' }" style="color: #fff; display: block" replace>产品</router-link>
-            <router-link :to="{ name: 'ProductDetail', query: { a: '333', b: 1 } }" style="color: #fff; display: block" replace>详情</router-link>
-            <router-link :to="{ name: 'AdminIndex' }" style="color: #fff; display: block" replace>管理员</router-link>
-            <router-link :to="{ name: 'AdminEdit' }" style="color: #fff; display: block" replace>编辑</router-link>
-            <router-link :to="{ name: 'AdminRole' }" style="color: #fff; display: block" replace>角色</router-link>
+        <div class="cat-sidebar__nav">
+            <el-menu :default-active="$route.name" :collapse="isCollapse" router unique-opened>
+                <cat-submenu :data-list="authMenu"></cat-submenu>
+            </el-menu>
         </div>
-        <div class="copyright">
-            <span>@2021 teamwei.com</span>
-            <a href="https://github.com/oringecat/vcat-admin" target="_blank">GitHub</a>
+        <div :class="[ 'cat-sidebar__copyright', isCollapse && 'is-fold' ]">
+            <a href="https://github.com/oringecat/vcat-admin" target="_blank">vCat Admin - GitHub</a>
+            <span>&copy;2007-{{ year }} teamwei.com</span>
         </div>
     </div>
 </template>
@@ -25,18 +22,27 @@
      * date: 2021-08-29
      */
 
-    import { defineComponent } from "vue";
+    import { defineComponent, ref, reactive } from "vue";
     import { getAuthMenu } from "@/router/dynamic";
 
     export default defineComponent({
         name: "CatSidebar",
+        props: {
+            // 是否折叠收起菜单
+            isCollapse: Boolean
+        },
         setup() {
-            const authMenu = getAuthMenu();
-            console.log(authMenu)
+            const authMenu = reactive(getAuthMenu()),
+                year = ref(new Date().getFullYear());
+
+            return {
+                authMenu,
+                year,
+            }
         }
     });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
     @import "./index.less";
 </style>

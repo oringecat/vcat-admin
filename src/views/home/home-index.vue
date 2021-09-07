@@ -1,12 +1,12 @@
 ﻿<template>
-    <cat-view>
+    <cat-view class="home-index">
         <template #headerLeft>
             左边
         </template>
         <template #headerRight>
             右边
         </template>
-        <div>首页：{{ loginInfo }}</div>
+        <div class="content">首页：{{ loginInfo }}</div>
         <el-input v-model="inputValue" style="width:200px;"></el-input>
         <template #footer>
             底边
@@ -30,3 +30,7 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="less">
+    @import "./home.less";
+</style>

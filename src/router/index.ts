@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import { clearPending } from "@/api/service";
 import { store } from "@/store";
 import { registerRoutes } from "@/router/dynamic";
-import Page from "@/layouts/page/index.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -21,21 +20,6 @@ const routes: Array<RouteRecordRaw> = [
             title: "注册",
         },
     },
-    {
-        path: "/",
-        redirect: "/home",
-        component: Page,
-        children: [
-            {
-                path: "",
-                name: "HomeIndex",
-                component: () => import("@/views/home/home-index.vue"),
-                meta: {
-                    title: "首页",
-                },
-            },
-        ],
-    },
 ];
 
 const router = createRouter({
@@ -44,15 +28,16 @@ const router = createRouter({
 });
 
 // 防止路由无限循环
-let routeFlag = false;
+let routerFlag = false;
 
 // 路由跳转之前调用
 router.beforeEach((to, from, next) => {
     clearPending();
+    document.title = (to.meta.title as string ?? "后台管理") + " - vCat Admin";
     const token = store.state.user.loginInfo.token;
 
     if (token) {
-        if (routeFlag) {
+        if (routerFlag) {
             if (to.name === "Login" || to.name === "Register") {
                 next("/");
             } else {
@@ -61,14 +46,14 @@ router.beforeEach((to, from, next) => {
         } else {
             // 注册动态路由
             registerRoutes().then(() => {
-                routeFlag = true;
+                routerFlag = true;
                 next({ ...to, replace: true });
             }).catch(() => {
                 // 404?
             })
         }
     } else {
-        routeFlag = false;
+        routerFlag = false;
         if (to.name === "Login" || to.name === "Register") {
             next();
         } else {

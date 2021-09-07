@@ -1,6 +1,125 @@
-﻿.cat-navbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px;
+﻿.cat-sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: #fff;
+    background-color: #313b46;
+
+    &__header:not(.is-fold), &__copyright:not(.is-fold) {
+        width: var(--sidebar-width,200px);
+        height: 56px;
+        transform: translate3d(0,0,0);
+    }
+
+    &__header {
+        display: inline-flex;
+        align-items: center;
+        width: 0;
+        height: 0;
+        padding: 0 20px;
+        border-bottom: 1px solid #3f4a56;
+        transform: translate3d(0,-100%,0);
+        transition: all 200ms;
+        overflow: hidden;
+
+        .logo {
+            font-weight: bold;
+        }
+    }
+
+    &__nav {
+        .el-menu:not(.el-menu--collapse) {
+            width: 200px;
+        }
+
+        .el-menu {
+            border: 0;
+            background-color: transparent;
+
+            &--inline {
+                background-color: #262b31;
+            }
+
+            &--collapse {
+                .text-icon {
+                    display: inline-block;
+                    vertical-align: middle;
+                    width: 24px;
+                    text-align: center;
+                }
+            }
+
+            .el-sub-menu {
+                .text-icon {
+                    font-style: normal;
+                    color: inherit;
+                }
+
+                .menu-icon {
+                    font-size: inherit;
+                }
+            }
+
+            .el-sub-menu__title, .el-menu-item {
+                height: 48px;
+                line-height: 48px;
+                color: #b6bec6;
+
+                &:hover {
+                    background-color: #3f4a56;
+                }
+            }
+
+            .el-sub-menu.is-opened {
+                .el-sub-menu .el-sub-menu__title {
+                    background-color: transparent;
+                }
+
+                .el-sub-menu__title {
+                    color: #fff;
+                    background-color: #3f4a56;
+
+                    .menu-icon {
+                        color: inherit;
+                    }
+                }
+
+                .el-menu-item {
+                    color: #fff;
+
+                    &:hover {
+                        color: #66b1ff;
+                        background-color: transparent;
+
+                        .menu-icon {
+                            color: inherit;
+                        }
+                    }
+                }
+
+                .el-menu-item.is-active {
+                    color: #66b1ff;
+                }
+            }
+        }
+    }
+
+    &__copyright {
+        display: inline-flex;
+        flex-direction: column;
+        width: 0;
+        height: 0;
+        font-size: 12px;
+        line-height: 20px;
+        color: #697b8f;
+        padding: 10px;
+        margin-top: auto;
+        transform: translate3d(0,100%,0);
+        transition: all 200ms;
+        overflow: hidden;
+
+        a {
+            color: inherit;
+        }
+    }
 }

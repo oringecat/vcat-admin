@@ -5,7 +5,7 @@
  */
 
 const utils = {
-    //检测客户端平台
+    // 检测客户端平台
     clientAgent: (function (): { [key: string]: boolean } {
         const ua = navigator.userAgent,
             isWindowsPhone = /(?:Windows Phone)/.test(ua),

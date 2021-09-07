@@ -1,6 +1,21 @@
 ﻿.cat-navbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    color: #525b65;
+    padding: 0 20px;
+
+    &__left {
+        display: flex;
+        align-items: center;
+
+        .el-breadcrumb__inner {
+            color: inherit !important;
+
+            [class^=el-icon-] {
+                margin-right: 5px;
+            }
+        }
+    }
 }

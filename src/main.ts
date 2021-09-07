@@ -6,6 +6,7 @@ import validate from "./utils/validate";
 import layouts from "./layouts";
 import components from "./components";
 import elementPlus from './lib/element-plus' // 按需引入 element 组件
+import './utils/extension'
 
 const app = createApp(App);
 app.use(store);

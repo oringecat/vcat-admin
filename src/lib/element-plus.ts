@@ -1,6 +1,27 @@
 ﻿import { CompatVue, Component } from "vue";
-import { ElTabs, ElTabPane, ElIcon, ElInput, ElButton } from 'element-plus' // 按需引入 element 组件
-import { ArrowLeft, ArrowRight, CircleCloseFilled } from '@element-plus/icons' // 按需引入 element 图标
+
+// 按需引入 element 图标
+import {
+    ArrowLeft,
+    ArrowRight,
+    CircleCloseFilled,
+    Fold,
+    Expand,
+} from '@element-plus/icons'
+
+// 按需引入 element 组件
+import {
+    ElTabs,
+    ElTabPane,
+    ElIcon,
+    ElInput,
+    ElButton,
+    ElMenu,
+    ElMenuItem,
+    ElSubMenu,
+    ElBreadcrumb,
+    ElBreadcrumbItem,
+} from 'element-plus'
 import "element-plus/dist/index.css";
 
 const elementPlus = [
@@ -8,13 +29,20 @@ const elementPlus = [
     ElTabPane,
     ElIcon,
     ElInput,
-    ElButton
+    ElButton,
+    ElMenu,
+    ElMenuItem,
+    ElSubMenu,
+    ElBreadcrumb,
+    ElBreadcrumbItem,
 ];
 
 const elementIcons = [
     ArrowLeft,
     ArrowRight,
-    CircleCloseFilled
+    CircleCloseFilled,
+    Fold,
+    Expand,
 ];
 
 const install: Component = (app: CompatVue) => {

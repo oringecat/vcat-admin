@@ -20,18 +20,29 @@ export const appStorage = {
     routerMap: [],
 }
 
-type AppStorage = typeof appStorage; // 获取对象类型
+type AppStorage = typeof appStorage;
 //type AppStorageKey = AppStorage[keyof AppStorage]; // 获取对象所有值类型
 
-const storageData = {
-    get<Key extends keyof AppStorage>(storage: Storage, key: Key): AppStorage[Key] {
+type StorageData = {
+    get<Key extends keyof AppStorage>(storage: Storage, key: Key): AppStorage[Key];
+    set<Key extends keyof AppStorage>(storage: Storage, key: Key, value: AppStorage[Key]): void;
+}
+
+type StorageItem = {
+    get<Key extends keyof AppStorage>(key: Key): AppStorage[Key];
+    set<Key extends keyof AppStorage>(key: Key, value: AppStorage[Key]): void;
+    remove<Key extends keyof AppStorage>(key: Key): void;
+}
+
+const storageData: StorageData = {
+    get(storage, key) {
         const data = storage.getItem(key);
         if (data !== "undefined" && data !== null) {
-            return JSON.parse(data) as AppStorage[Key];
+            return JSON.parse(data);
         }
         return appStorage[key];
     },
-    set<Key extends keyof AppStorage>(storage: Storage, key: Key, value: AppStorage[Key]): void {
+    set(storage, key, value) {
         if (value !== undefined && value !== null) {
             const str = JSON.stringify(value);
             storage.setItem(key, str);
@@ -39,26 +50,26 @@ const storageData = {
     }
 }
 
-export const localData = {
-    get<Key extends keyof AppStorage>(key: Key): AppStorage[Key] {
+export const localData: StorageItem = {
+    get(key) {
         return storageData.get(localStorage, key);
     },
-    set<Key extends keyof AppStorage>(key: Key, value: AppStorage[Key]): void {
+    set(key, value) {
         storageData.set(localStorage, key, value);
     },
-    remove<Key extends keyof AppStorage>(key: Key): void {
+    remove(key) {
         localStorage.removeItem(key);
     }
 }
 
-export const sessionData = {
-    get<Key extends keyof AppStorage>(key: Key): AppStorage[Key] {
+export const sessionData: StorageItem = {
+    get(key) {
         return storageData.get(sessionStorage, key);
     },
-    set<Key extends keyof AppStorage>(key: Key, value: AppStorage[Key]): void {
+    set(key, value) {
         storageData.set(sessionStorage, key, value);
     },
-    remove<Key extends keyof AppStorage>(key: Key): void {
+    remove(key) {
         sessionStorage.removeItem(key);
     }
 }
