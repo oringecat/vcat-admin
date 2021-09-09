@@ -9,6 +9,7 @@ import { IGlobalState } from "./interface";
 
 interface IAppState {
     loading: boolean;
+    isMobile: boolean;
 }
 
 // Module接受两个参数，第一个为自身state类型，第二个为根state类型
@@ -16,15 +17,27 @@ const app: Module<IAppState, IGlobalState> = {
     namespaced: true,
     state: {
         loading: false,
+        isMobile: false,
     },
     mutations: {
         SET_LOADING: (state, value) => {
             state.loading = value;
         },
+        IS_MOBILE: (state) => {
+            const clientWidth = document.documentElement.clientWidth;
+            if (clientWidth > 768) {
+                state.isMobile = false;
+            } else {
+                state.isMobile = true;
+            }
+        },
     },
     actions: {
         setLoading: (context, value) => {
             context.commit("SET_LOADING", value);
+        },
+        isMobile: (context) => {
+            context.commit("IS_MOBILE");
         },
     },
 };

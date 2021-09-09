@@ -22,3 +22,33 @@
         margin-top: 10px;
     }
 }
+
+.el-popper {
+    &.is-light {
+        border: 0;
+    }
+
+    .el-menu--vertical {
+        .el-menu {
+            background-color: var(--sidebar-background);
+
+            &--popup {
+                padding: 10px 0;
+            }
+
+            &-item {
+                height: 48px;
+                line-height: 48px;
+                color: #fff;
+
+                &:hover {
+                    background-color: var(--sidebar-menu-item-hover);
+                }
+
+                &.is-active {
+                    background-color: var(--sidebar-menu-item-active);
+                }
+            }
+        }
+    }
+}

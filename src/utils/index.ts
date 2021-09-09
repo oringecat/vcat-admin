@@ -6,7 +6,7 @@
 
 const utils = {
     // 检测客户端平台
-    clientAgent: (function (): { [key: string]: boolean } {
+    clientAgent: ((): { [key: string]: boolean } => {
         const ua = navigator.userAgent,
             isWindowsPhone = /(?:Windows Phone)/.test(ua),
             isSymbian = /(?:SymbianOS)/.test(ua) || isWindowsPhone,
@@ -28,6 +28,25 @@ const utils = {
             isPc: isPc,
         };
     })(),
+    //函数防抖 (等待触发)
+    debounce: (callback: () => void, ms: number) => {
+        let timer = 0;
+        return () => {
+            clearTimeout(timer);
+            timer = window.setTimeout(callback, ms);
+        }
+    },
+    //函数节流 (间隔触发)
+    throttle: (callback: () => void, ms: number) => {
+        let timer = 0;
+        return () => {
+            if (timer) return;
+            timer = window.setTimeout(() => {
+                callback();
+                timer = 0;
+            }, ms);
+        }
+    },
 };
 
 export default utils;

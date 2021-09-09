@@ -21,6 +21,8 @@ import {
     ElSubMenu,
     ElBreadcrumb,
     ElBreadcrumbItem,
+    ElDrawer,
+    ElScrollbar,
 } from 'element-plus'
 import "element-plus/dist/index.css";
 
@@ -35,6 +37,8 @@ const elementPlus = [
     ElSubMenu,
     ElBreadcrumb,
     ElBreadcrumbItem,
+    ElDrawer,
+    ElScrollbar,
 ];
 
 const elementIcons = [

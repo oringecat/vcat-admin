@@ -1,7 +1,13 @@
+/*!
+ * ©teamwei.com
+ * author: teamwei
+ * date: 2021-08-28
+ */
+
 @border-color: #eee;
 @arrow-color:#aaa;
 
-//移动端1px边框修复
+/* 移动端1px边框修复 */
 .mixin-border() {
     position: relative;
     line-height: normal;
@@ -14,7 +20,7 @@
     }
 }
 
-//左边框
+/* 左边框 */
 .mixin-border-left(@width: 1px,@rgb: @border-color,@type: solid) {
     .mixin-border();
 
@@ -28,7 +34,7 @@
     }
 }
 
-//右边框
+/* 右边框 */
 .mixin-border-right(@width: 1px,@rgb: @border-color,@type: solid) {
     .mixin-border();
 
@@ -42,7 +48,7 @@
     }
 }
 
-//上边框
+/* 上边框 */
 .mixin-border-top(@width: 1px,@rgb: @border-color,@type: solid) {
     .mixin-border();
 
@@ -56,7 +62,7 @@
     }
 }
 
-//下边框
+/* 下边框 */
 .mixin-border-bottom(@width: 1px,@rgb: @border-color,@type: solid) {
     .mixin-border();
 

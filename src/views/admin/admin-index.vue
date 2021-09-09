@@ -7,13 +7,11 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
-    import { useRouter } from "vue-router";
+    import router from "@/router";
 
     export default defineComponent({
         name: "AdminIndex",
         setup() {
-            const router = useRouter();
-
             const toEdit = () => {
                 router.replace({ name: "AdminEdit" });
             }

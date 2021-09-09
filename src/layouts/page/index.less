@@ -1,12 +1,8 @@
-﻿.cat-page {
+﻿@import "../../themes/base/mixin-resize.less";
+
+.cat-page {
     display: flex;
     height: 100%;
-
-    @media screen and (max-width: 576px) {
-        &__sidebar {
-            display: none;
-        }
-    }
 
     &__container {
         flex: 1;

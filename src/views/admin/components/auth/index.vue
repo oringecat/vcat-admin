@@ -1,9 +1,6 @@
 ﻿<template>
     <div class="cat-auth">
-        <div class="cat-auth__left">
-            <img src="@/assets/logo.png" width="200" />
-        </div>
-        <div class="cat-auth__right">
+        <div class="cat-auth__wrapper">
             <div class="cat-auth__container">
                 <div class="title">
                     <h1>李兔饼后台管理系统</h1>

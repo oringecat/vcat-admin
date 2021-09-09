@@ -1,0 +1,77 @@
+﻿/*!
+ * ©teamwei.com
+ * author: teamwei
+ * date: 2021-09-07
+ */
+
+
+/* 移动设备 */
+@phone: ~"screen and (max-width: 575px)";
+
+/* 移动设备 (横屏) */
+@phone-h: ~"screen and (min-width: 576px) and (max-width: 767px)";
+
+/* 平板设备 */
+@tablet: ~"screen and (min-width: 768px) and (max-width: 991px)";
+
+/* 电脑设备 */
+@pc: ~"screen and (min-width: 992px)";
+
+/* 
+    根据不同设备适配属性单位
+    @device 设备代码
+*/
+.mixin-property-rules(@property, @value, @device) {
+    @n: length(@value);
+
+    .each(@i, @parent: "") when (@i < @n + 1) {
+        @arg: extract(@value, @i);
+
+        /* 手机 */
+        .ifNumber() when (isnumber(@arg) = true) and (@device = 001) {
+            @child: unit(@arg * 2 / 100, rem);
+        }
+        /* 平板、电脑 */
+        .ifNumber() when (isnumber(@arg) = true) and (@device = 002) {
+            @child: unit(@arg, px);
+        }
+        /* 非数值 */
+        .ifNumber() when (isnumber(@arg) = false) {
+            @child: @arg;
+        }
+
+        .ifNumber();
+        @newValue: ~"@{parent} @{child}";
+
+        .ifLast() when (@i = @n) {
+            @{property}: @newValue;
+        }
+
+        .ifLast();
+        .each(@i + 1, @newValue);
+    }
+
+    .each(1);
+}
+
+.mixin-property(@property, @value) {
+    @media @phone,@phone-h {
+        .mixin-property-rules(@property, @value, 001);
+    }
+
+    @media @pc,@tablet {
+        .mixin-property-rules(@property, @value, 002);
+    }
+}
+
+html {
+    font-size: 14px;
+
+    @media @phone {
+        font-size: ~"calc(100vw / 750 * 100)";
+    }
+
+    @media @phone-h {
+        font-size: ~"calc(100vw / 1344 * 100)";
+    }
+}

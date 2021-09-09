@@ -1,5 +1,5 @@
 <template>
-    <router-view></router-view>
+    <router-view :class="{ mobile: isMobile }"></router-view>
 </template>
 
 <script lang="ts">
@@ -10,7 +10,9 @@
     export default defineComponent({
         name: "App",
         setup() {
-            const loginInfo = computed(() => store.state.user.loginInfo);
+            const loginInfo = computed(() => store.state.user.loginInfo),
+                isMobile = computed(() => store.state.app.isMobile);
+
             // 全局共享登陆信息
             provide("loginInfo", loginInfo);
 
@@ -18,6 +20,10 @@
                 const classList = document.body.classList;
                 classList.add(localData.get("appTheme"));
             })
+
+            return {
+                isMobile,
+            }
         },
     });
 </script>

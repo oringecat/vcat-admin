@@ -1,12 +1,12 @@
 ﻿<template>
     <div class="cat-page">
-        <cat-sidebar class="cat-page__sidebar" :is-collapse="isCollapse"></cat-sidebar>
+        <cat-sidebar class="cat-page__sidebar" v-model="sidebarCollapse"></cat-sidebar>
         <div class="cat-page__container">
             <div class="header">
                 <cat-navbar>
                     <template #left>
-                        <el-icon class="icon-fold-expand" title="折叠/展开" @click="isCollapse = !isCollapse">
-                            <expand v-if="isCollapse" />
+                        <el-icon class="icon-fold-expand" title="折叠/展开" @click="sidebarCollapse = !sidebarCollapse">
+                            <expand v-if="sidebarCollapse" />
                             <fold v-else />
                         </el-icon>
                     </template>
@@ -42,7 +42,7 @@
         setup() {
             const route = useRoute(),
                 excludePages = computed(() => store.state.router.excludePages),
-                isCollapse = ref(false);
+                sidebarCollapse = ref(store.state.app.isMobile);
 
             watch(() => ({
                 name: route.name,
@@ -57,7 +57,7 @@
 
             return {
                 excludePages,
-                isCollapse,
+                sidebarCollapse,
             };
         },
     });

@@ -64,7 +64,7 @@
                             if (redirect) {
                                 router.replace(redirect.toString());
                             } else {
-                                router.replace({ name: "HomeIndex" });
+                                router.replace("/");
                             }
                         },
                         fail: (err) => {
@@ -89,7 +89,7 @@
                     if (redirect) {
                         router.replace(redirect.toString());
                     } else {
-                        router.replace({ name: "HomeIndex" });
+                        router.replace("/");
                     }
                 }
             };
