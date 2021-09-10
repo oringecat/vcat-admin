@@ -81,7 +81,8 @@
                     store.dispatch("user/login", {
                         id: 1001,
                         account: "teamwei",
-                        realname: "超级管理员",
+                        avatar: "",
+                        realName: "超级管理员",
                         token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
                     });
 

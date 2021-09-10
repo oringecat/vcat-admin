@@ -18,4 +18,35 @@
             }
         }
     }
+
+    &__right {
+        display: flex;
+        align-items: center;
+
+        .iconbar {
+            display: flex;
+            align-items: center;
+
+            > * {
+                margin-right: 20px;
+            }
+        }
+
+        .user-dropdown {
+            &__link {
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .cat-image--avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                font-size: 0;
+                margin-right: 4px;
+            }
+        }
+    }
 }

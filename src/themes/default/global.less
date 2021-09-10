@@ -1,11 +1,21 @@
-﻿/*!
- * .g-全局样式
- * .p-私有样式
- * .e-元素样式
- * .m-模块样式
- */
+﻿@import './variable.less';
 
-@import './variable.less';
+[class*='cat-image-'] {
+    position: relative;
+    object-fit: cover;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: url("~@/assets/avatar.jpg") no-repeat center;
+        background-size: cover;
+    }
+}
 
 .t-validate {
     &-error {

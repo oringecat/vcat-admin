@@ -216,7 +216,7 @@ const install: Component = (app: CompatVue) => {
             e.dispatchEvent(evt);
           });
 
-          //筛选验证失败消息
+          //验证失败消息
           const result: string[] = inputs.reduce((pre, cur) => {
             const message = cur.dataset["validateMessage"] || "error";
             if (message !== "ok") {

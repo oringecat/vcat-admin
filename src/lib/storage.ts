@@ -11,7 +11,7 @@ export const appStorage = {
     loginInfo: {
         id: 0,
         account: "guest",
-        realName: "访客",
+        realName: "未登录",
         token: "",
     },
     // 用户自动登录

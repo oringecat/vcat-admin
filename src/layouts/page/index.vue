@@ -5,10 +5,9 @@
             <div class="header">
                 <cat-navbar>
                     <template #left>
-                        <el-icon class="icon-fold-expand" title="折叠/展开" @click="sidebarCollapse = !sidebarCollapse">
-                            <expand v-if="sidebarCollapse" />
-                            <fold v-else />
-                        </el-icon>
+                        <i class="icon-fold-expand" title="折叠/展开" @click="sidebarCollapse = !sidebarCollapse">
+                            <span :class="sidebarCollapse ? 'cat-icon-expand' : 'cat-icon-fold'"></span>
+                        </i>
                     </template>
                 </cat-navbar>
                 <cat-tabbar></cat-tabbar>

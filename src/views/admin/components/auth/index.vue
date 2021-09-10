@@ -3,7 +3,7 @@
         <div class="cat-auth__wrapper">
             <div class="cat-auth__container">
                 <div class="title">
-                    <h1>李兔饼后台管理系统</h1>
+                    <h1>橘猫后台管理系统</h1>
                     <h2>{{ title }}</h2>
                 </div>
                 <div class="main">

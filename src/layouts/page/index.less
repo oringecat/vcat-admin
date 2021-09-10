@@ -1,6 +1,4 @@
-﻿@import "../../themes/base/mixin-resize.less";
-
-.cat-page {
+﻿.cat-page {
     display: flex;
     height: 100%;
 
@@ -15,9 +13,11 @@
             box-shadow: 0 2px 12px 0 rgba(0,0,0,.15);
 
             .icon-fold-expand {
-                font-size: 20px;
-                cursor: pointer;
                 margin-right: 10px;
+
+                [class^='cat-icon-']:before {
+                    font-size:20px;
+                }
             }
         }
 

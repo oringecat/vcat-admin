@@ -1,26 +1,22 @@
 ﻿<template>
     <div class="cat-tabbar">
         <div class="cat-tabbar__arrow" @click="scrollTabbar('prev')" v-if="showArrow">
-            <el-icon>
-                <arrow-left />
-            </el-icon>
+            <span class="cat-icon-arrow-left"></span>
         </div>
         <div ref="containerElement" class="cat-tabbar__container">
             <ul ref="tabbarElement" class="cat-tabbar__list">
                 <template v-for="(item, index) in historyPages" :key="index">
                     <li :class="['cat-tabbar__item', activeName === item.name && 'is-active']" @click="changeTab(index)">
                         <span class="tab-text">{{item.title}}</span>
-                        <el-icon class="tab-close" title="关闭页面" v-if="historyPages.length > 1">
-                            <circle-close-filled @click.stop="removeTab(index)" />
-                        </el-icon>
+                        <template v-if="historyPages.length > 1 && (isMobile ? activeName === item.name : true)">
+                            <span class="tab-close cat-icon-close-filled" title="关闭页面" @click.stop="removeTab(index)"></span>
+                        </template>
                     </li>
                 </template>
             </ul>
         </div>
         <div class="cat-tabbar__arrow" @click="scrollTabbar('next')" v-if="showArrow">
-            <el-icon>
-                <arrow-right />
-            </el-icon>
+            <span class="cat-icon-arrow-right"></span>
         </div>
     </div>
 </template>
@@ -46,6 +42,11 @@
                 showArrow = ref(false),
                 historyPages = computed(() => store.state.router.historyPages),
                 activeName = ref(route.name);
+
+            const isMobile = computed(() => {
+                scrollTab();
+                return store.state.app.isMobile;
+            });
 
             // 选择标签
             const changeTab = (index: number) => {
@@ -169,6 +170,7 @@
                 tabbarElement,
                 showArrow,
                 historyPages,
+                isMobile,
                 activeName,
                 changeTab,
                 removeTab,

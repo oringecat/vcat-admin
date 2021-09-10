@@ -17,10 +17,6 @@
         cursor: pointer;
         color: #999;
 
-        .el-icon {
-            font-size: 16px;
-        }
-
         &:hover {
             color: #000;
         }
@@ -67,27 +63,25 @@
             align-items: center;
             width: 40px;
             height: 100%;
-            font-size: 16px;
-            color: #313b46;
 
-            svg {
+            &:before {
                 transition: color 200ms;
             }
 
-            svg:hover {
-                color: red !important;
+            &:hover:before {
+                color: var(--tabbar-close-hover) !important;
             }
         }
 
         &:not(.is-active) {
             .tab-close {
                 width: 20px;
-                font-size: 0;
+                color: transparent;
                 transition: width 200ms;
             }
 
             &:hover {
-                background-color: #eee;
+                background-color: var(--tabbar-hover);
 
                 .tab-text {
                     color: #313b46;
@@ -95,14 +89,14 @@
 
                 .tab-close {
                     width: 40px;
-                    font-size: 16px;
+                    color: var(--tabbar-active);
                 }
             }
         }
     }
 
     &__item.is-active {
-        background-color: #313b46;
+        background-color: var(--tabbar-active);
 
         .tab-text {
             color: #fff;
