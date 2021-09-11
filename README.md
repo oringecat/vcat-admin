@@ -1,11 +1,15 @@
 # vcat-admin
-Vue后台系统基础框架，最近空闲时间较多，正在打造一个全新的后台管理系统，同时支持PC和APP端，目前还处于初级开发阶段。
+Vue后台系统基础框架，最近空闲时间较多，正在打造一个全新的后台管理系统，同时支持PC和移动端，目前处于开发阶段。  
+非框架二次开发，原创中...
 
-## 特性说明
-- Vue3.0 + Typescript + Element Plus
+## 更新日志 (功能描述)
+- 基于 Vue3.0 + Typescript + Element Plus
 - 路由动态加载
-- 路由状态控制 (页面生命周期可控)
+- 路由状态控制 (页面缓存)
+- ECharts 响应尺寸变化
+- 移动端适配 (未完整)
+- Mock.js 单元测试
 
 <div align="center">
-  <img src="https://segmentfault.com/img/bVcUzxt" >
+  <img src="http://teamwei.com/vcat-admin/preview.jpg" >
 </div>
