@@ -10,6 +10,8 @@ Vue后台系统基础框架，最近空闲时间较多，正在打造一个全�
 - 移动端适配 (未完整)
 - Mock.js 单元测试
 
+### [在线预览](http://teamwei.com/vcat-admin)
+
 <div align="center">
   <img src="http://teamwei.com/vcat-admin/preview.jpg" >
 </div>
