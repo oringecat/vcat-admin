@@ -56,7 +56,7 @@ export const clearPending = (): void => {
 };
 
 const service = axios.create({
-    baseURL: "https://localhost:44314",
+    //baseURL: "https://localhost:44314",
     timeout: 30000,
 });
 

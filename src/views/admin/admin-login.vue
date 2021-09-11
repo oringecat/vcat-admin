@@ -8,7 +8,7 @@
                 <el-input type="password" placeholder="密码" v-model="admin.password" v-validate="{ rules: 'required' }"></el-input>
             </li>
             <li class="form-button">
-                <el-button type="primary" :disabled="loading" v-validate-submit.sync="loginSuccess">
+                <el-button type="primary" :disabled="loading" v-validate-submit.sync="login">
                     <template v-if="loading">
                         <i class="el-icon-loading"></i>
                         <span>正在登录</span>
@@ -75,31 +75,10 @@
                 }
             };
 
-            //模拟登录成功（测试用，不随生产环境发布）
-            const loginSuccess = (message: string[]) => {
-                if (message.length === 0) {
-                    store.dispatch("user/login", {
-                        id: 1001,
-                        account: "teamwei",
-                        avatar: "",
-                        realName: "超级管理员",
-                        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
-                    });
-
-                    const redirect = route.query.redirect;
-                    if (redirect) {
-                        router.replace(redirect.toString());
-                    } else {
-                        router.replace("/");
-                    }
-                }
-            };
-
             return {
                 admin,
                 loading,
                 login,
-                loginSuccess,
             };
         },
     });

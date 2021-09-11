@@ -31,20 +31,27 @@ export const clientAgent = ((): { [key: string]: boolean } => {
 //函数防抖 (等待触发)
 export const debounce = (callback: () => void, ms: number): () => void => {
     let timer = 0;
-    return () => {
+    return function <T>(this: T) {
         clearTimeout(timer);
-        timer = window.setTimeout(callback, ms);
+        timer = window.setTimeout(callback.bind(this), ms);
     }
 }
 
 //函数节流 (间隔触发)
 export const throttle = (callback: () => void, ms: number): () => void => {
     let timer = 0;
-    return () => {
+    return function <T>(this: T) {
         if (timer) return;
         timer = window.setTimeout(() => {
-            callback();
+            callback.call(this);
             timer = 0;
         }, ms);
     }
+}
+
+// 监听窗口大小变化
+export const onresize = (callback: () => void, ms = 100): void => {
+    window.addEventListener('resize', debounce(() => {
+        callback();
+    }, ms));
 }

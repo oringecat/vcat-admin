@@ -10,13 +10,15 @@ import navbar from "./navbar/index.vue";
 import submenu from "./submenu/index.vue";
 import tabbar from "./tabbar/index.vue";
 import scrollbar from "./scrollbar/index.vue";
+import chart from "./chart/index.vue";
 
 const components = [
     sidebar,
     navbar,
     submenu,
     tabbar,
-    scrollbar
+    scrollbar,
+    chart,
 ];
 
 const install: Component = (app: CompatVue) => {

@@ -16,7 +16,7 @@
     export default defineComponent({
         name: "CatScrollbar",
         props: {
-            //滚动元素名称(适合同页面多组件切换)
+            // 滚动元素名称(适合同页面多组件切换)
             scrollName: {
                 type: String,
                 default: "default",
@@ -28,10 +28,10 @@
         },
         setup(props) {
             let timer = 0;
-            const scrollElement = ref(); //滚动元素
-            const scrollTargets: { name: string; top: number }[] = []; //滚动元素列表
+            const scrollElement = ref(); // 滚动元素
+            const scrollTargets: { name: string; top: number }[] = []; // 滚动元素列表
 
-            //监听滚动元素名称
+            // 监听滚动元素名称
             watch(() => props.scrollName, (value) => {
                 const target = scrollTargets.find((t) => t.name === value);
                 const el = scrollElement.value;
@@ -41,7 +41,7 @@
                 }
             });
 
-            //获取当前滚动元素
+            // 获取当前滚动元素
             const getScrollTarget = (defaultValue = 0) => {
                 const target = scrollTargets.find((t) => t.name === props.scrollName);
                 if (target == null) {
@@ -54,7 +54,7 @@
                 return target;
             };
 
-            //监听滚动条位置
+            // 监听滚动条位置
             const onScrollPosition = (e: Event) => {
                 clearTimeout(timer);
                 timer = window.setTimeout(() => {
@@ -67,13 +67,13 @@
             onActivated(() => {
                 const el = scrollElement.value;
                 el.scrollTop = getScrollTarget().top;
-                //添加监听事件
+                // 添加监听事件
                 el.addEventListener("scroll", onScrollPosition);
             });
 
             onDeactivated(() => {
                 const el = scrollElement.value;
-                //移除监听事件
+                // 移除监听事件
                 el && el.removeEventListener("scroll", onScrollPosition);
             });
 

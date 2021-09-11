@@ -47,7 +47,6 @@
     import { defineComponent, ref, computed, onMounted } from "vue";
     import { useRoute } from "vue-router";
     import { store } from "@/store";
-    import { debounce } from "@/utils"
 
     export default defineComponent({
         name: "CatNavbar",
@@ -76,13 +75,13 @@
 
             onMounted(() => {
                 // 监听全屏变化
-                window.addEventListener('resize', debounce(() => {
-                    if (window.innerHeight === window.screen.height) {
+                window.addEventListener("fullscreenchange", () => {
+                    if (document.fullscreen) {
                         fullScreen.value = true;
                     } else {
                         fullScreen.value = false;
                     }
-                }, 100));
+                });
             })
 
             return {
