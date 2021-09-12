@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="cat-chart" :style="{ width: width, height: height }">
         <div ref="chartElement" class="cat-chart__canvas"></div>
-        <iframe ref="iframeElement" class="cat-chart__iframe"></iframe>
+        <iframe ref="iframeElement" class="cat-chart__iframe" title="chart"></iframe>
     </div>
 </template>
 
@@ -25,7 +25,7 @@
             },
             height: {
                 type: String,
-                required: true
+                default: "100%"
             }
         },
         setup(props, { emit }) {
@@ -35,8 +35,8 @@
             let chart: unknown = null;
 
             const onresize = debounce(function (this: echarts.ECharts) {
-                const el: HTMLIFrameElement = iframeElement.value;
-                // 如果 chart 宽高和 iframe 不一致，重新渲染
+                const el: HTMLIFrameElement = chartElement.value;
+                // 如果 chart 宽高和父级元素不一致，重新渲染
                 if (el.clientWidth !== this.getWidth() || el.clientHeight !== this.getHeight()) {
                     this.resize && this.resize();
                 }
@@ -49,13 +49,13 @@
 
             onActivated(() => {
                 const el: HTMLIFrameElement = iframeElement.value;
-                // 监听变化
+                // 监听 iframe 变化，虽然元素可用 ResizeObserver 监听，不过 ResizeObserver 还未正式修订
                 el.contentWindow?.addEventListener("resize", onresize.bind(chart));
             })
 
             onDeactivated(() => {
                 const el: HTMLIFrameElement = iframeElement.value;
-                // 移除监听事件
+                // 移除 iframe 监听事件
                 el && el.contentWindow?.removeEventListener("resize", onresize);
             })
 

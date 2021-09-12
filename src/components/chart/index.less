@@ -1,5 +1,6 @@
 ﻿.cat-chart {
     position: relative;
+    overflow: hidden;
 
     &__canvas {
         width: 100%;
@@ -9,7 +10,8 @@
     &__iframe {
         position: absolute;
         z-index: -1000;
-        left: -1000%;
+        left: 0;
+        top: 0;
         width: 100%;
         height: 100%;
         border: 0;

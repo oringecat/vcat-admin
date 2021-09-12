@@ -21,6 +21,8 @@ import {
     ElDropdownMenu,
     ElDropdownItem,
     ElBadge,
+    ElRow,
+    ElCol,
 } from 'element-plus'
 import "element-plus/dist/index.css";
 
@@ -41,6 +43,8 @@ const elementPlus = [
     ElDropdownMenu,
     ElDropdownItem,
     ElBadge,
+    ElRow,
+    ElCol,
 ];
 
 //const elementIcons = [
