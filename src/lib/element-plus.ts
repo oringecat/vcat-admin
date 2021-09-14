@@ -1,4 +1,5 @@
 ﻿import { CompatVue, Component } from "vue";
+import "element-plus/dist/index.css";
 
 // 按需引入 element svg 图标 (暂时弃用)
 //import { ArrowLeft, ArrowRight, CircleCloseFilled, Fold, Expand, Bell, } from '@element-plus/icons'
@@ -23,8 +24,18 @@ import {
     ElBadge,
     ElRow,
     ElCol,
-} from 'element-plus'
-import "element-plus/dist/index.css";
+    ElTable,
+    ElTableColumn,
+    ElLoadingDirective,
+    ElPagination,
+    ElButtonGroup,
+    ElTree,
+    ElForm,
+    ElFormItem,
+    ElSwitch,
+    ElDialog,
+    ElDatePicker,
+} from "element-plus"
 
 const elementPlus = [
     ElTabs,
@@ -45,6 +56,16 @@ const elementPlus = [
     ElBadge,
     ElRow,
     ElCol,
+    ElTable,
+    ElTableColumn,
+    ElPagination,
+    ElButtonGroup,
+    ElTree,
+    ElForm,
+    ElFormItem,
+    ElSwitch,
+    ElDialog,
+    ElDatePicker,
 ];
 
 //const elementIcons = [
@@ -57,6 +78,8 @@ const elementPlus = [
 //];
 
 const install: Component = (app: CompatVue) => {
+    app.directive("loading", ElLoadingDirective);
+
     elementPlus.map((component) => {
         app.component(component.name, component); // 注册全局组件
     });

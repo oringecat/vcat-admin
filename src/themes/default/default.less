@@ -1,6 +1,68 @@
-@import './variable.less';
-@import './global.less';
-
 .theme-default {
+    // µÇÂ¼±³¾°Í¼Æ¬
+    --login-pc-image: url("~@/assets/login-mobile.jpg");
+    --login-mobile-image: url("~@/assets/login-mobile.jpg");
+    /* ×ÖÌå´óÐ¡¹æ·¶ */
+    --font-x-large: 18px;
+    --font-large: 16px;
+    --font-medium: 14px;
+    --font-small: 12px;
+    --font-x-small: 10px;
+    /* ÑÕÉ«¹æ·¶ */
+    --color-default: #384048;
+    --color-primary: #409EFF;
+    --color-secondary: #04c786;
+    --color-info: #999;
+    --color-border: #eee;
+    /* ¼ä¾à¹æ·¶ */
+    --space-medium: 20px;
+    /* ×´Ì¬À¸ */
+    --statusbar-height: 56px;
+    /* ±êÇ©À¸ */
+    --tabbar-active: #374758;
+    --tabbar-hover: #eee;
+    --tabbar-close-hover: red;
+    /* ²à±ßÀ¸ */
+    --sidebar-width: 220px;
+    --sidebar-background: #2b3a4a;
+    --sidebar-header-height: 56px;
+    --sidebar-header-border: 1px solid #374758;
+    --sidebar-menu-inline: #263442;
+    --sidebar-menu-item: #8699ad;
+    --sidebar-menu-item-hover: #374758;
+    --sidebar-menu-item-active: #278eff;
 
+    .el-button--success {
+        --el-button-background-color: #58db83 !important;
+        --el-button-border-color: #58db83 !important;
+        --el-button-hover-color: #4bba6f !important;
+        --el-button-active-background-color: #46af69 !important;
+        --el-button-active-border-color: #42a462 !important;
+    }
+
+    .el-button--info {
+        --el-button-background-color: #6c757d !important;
+        --el-button-border-color: #6c757d !important;
+        --el-button-hover-color: #5c636a !important;
+        --el-button-active-background-color: #565e64 !important;
+        --el-button-active-border-color: #51585e !important;
+    }
+
+    .el-button--danger {
+        --el-button-background-color: #ec536c !important;
+        --el-button-border-color: #ec536c !important;
+        --el-button-hover-color: #c9475c !important;
+        --el-button-active-background-color: #bd4256 !important;
+        --el-button-active-border-color: #b13e51 !important;
+    }
+
+    .el-button--warning {
+        --el-button-background-color: #f5b225 !important;
+        --el-button-border-color: #f5b225 !important;
+        --el-button-hover-color: #d0971f !important;
+        --el-button-active-background-color: #c48e1e !important;
+        --el-button-active-border-color: #b8861c !important;
+    }
+
+    @import './global.less';
 }

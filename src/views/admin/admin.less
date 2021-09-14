@@ -5,3 +5,33 @@
         }
     }
 }
+
+.admin-index {
+    .cat-image-avatar {
+        border-radius: 50%;
+    }
+}
+
+.admin-role {
+    display: flex;
+
+    .cat-view {
+        flex: 1;
+
+        &:not(:last-child) {
+            flex: none;
+            padding-right: 0;
+        }
+    }
+
+    &__tree {
+        min-width: 280px;
+
+        .el-tree > .el-tree-node > .el-tree-node__content {
+            font-weight: bold;
+        }
+    }
+
+    &__detail {
+    }
+}

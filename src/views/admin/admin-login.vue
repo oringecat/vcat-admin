@@ -2,10 +2,10 @@
     <cat-auth class="admin-login" title="登录">
         <ul class="form">
             <li class="form-input">
-                <el-input placeholder="账号" maxlength="11" v-model="admin.account" v-validate="{ rules: 'required' }"></el-input>
+                <el-input placeholder="账号" maxlength="11" v-model="admin.account" v-validate="{ rules: 'required', message: '随便输入' }"></el-input>
             </li>
             <li class="form-input">
-                <el-input type="password" placeholder="密码" v-model="admin.password" v-validate="{ rules: 'required' }"></el-input>
+                <el-input type="password" placeholder="密码" v-model="admin.password" v-validate="{ rules: 'required', message: '随便输入' }"></el-input>
             </li>
             <li class="form-button">
                 <el-button type="primary" :disabled="loading" v-validate-submit.sync="login">

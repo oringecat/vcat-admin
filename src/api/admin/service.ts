@@ -18,6 +18,10 @@ export class AdminService {
     }
 
     static getRoutes(params: IRequest<IAdminRoute>): void {
-        http("/admin/routes", "post", params);
+        http("/admin/routes", "get", params);
+    }
+
+    static getList(params: IRequest<IAdmin>): void {
+        http("/admin", "post", params);
     }
 }

@@ -1,6 +1,4 @@
-﻿@import './variable.less';
-
-[class*='cat-image-'] {
+﻿[class*='cat-image-'] {
     position: relative;
     object-fit: cover;
     overflow: hidden;
@@ -17,7 +15,45 @@
     }
 }
 
-.t-validate {
+// 表格
+.cat-table {
+    --table-border-color: #edf1f5;
+    border-color: var(--table-border-color);
+
+    th.el-table__cell {
+        text-align: center;
+        color: #333;
+        border-color: var(--table-border-color);
+        background-color: #f1f5f9 !important;
+    }
+
+    td.el-table__cell {
+        text-align: center;
+        border-color: var(--table-border-color);
+    }
+
+    &:after, &:before {
+        background-color: var(--table-border-color);
+    }
+}
+
+// 表单
+.cat-form {
+    padding: 20px;
+
+    .el-form-item__label {
+        font-weight: bold;
+        padding-right: 30px;
+    }
+
+    .el-input {
+        max-width: 270px;
+        margin-right: 10px;
+    }
+}
+
+// 表单验证
+.cat-validate {
     &-error {
         border-color: red;
     }
@@ -35,12 +71,12 @@
 
 .el-popper {
     &.is-light {
-        border: 0 !important;
-        background-color: transparent !important;
+        border: 0;
     }
 
     .el-menu {
-        box-shadow: 0 2px 10px 0 rgba(0,0,0,.15);
+        border-radius: 4px;
+        box-shadow: 0 2px 30px 0 rgba(0,0,0,.15);
     }
 
     .el-menu--popup {
@@ -49,7 +85,6 @@
 
     .el-menu--vertical {
         .el-menu {
-
             &-item {
                 height: 44px;
                 line-height: 44px;

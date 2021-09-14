@@ -80,7 +80,7 @@
 
                     &.is-active {
                         .el-sub-menu__title {
-                            background-color: var(--sidebar-menu-item-active);
+                            box-shadow: inset 2px 0 0 0 var(--sidebar-menu-item-active);
                         }
 
                         .text-icon, .menu-icon {
@@ -96,6 +96,7 @@
                 color: var(--sidebar-menu-item);
 
                 &:hover {
+                    color: #fff;
                     background-color: var(--sidebar-menu-item-hover);
                 }
             }
@@ -116,12 +117,9 @@
                         color: #fff;
                     }
 
-                    .el-menu-item {
+                    .el-menu-item.is-active {
                         color: #fff;
-
-                        &.is-active {
-                            background-color: var(--sidebar-menu-item-active);
-                        }
+                        box-shadow: inset 2px 0 0 0 var(--sidebar-menu-item-active);
                     }
                 }
             }

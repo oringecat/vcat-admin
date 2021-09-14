@@ -11,6 +11,7 @@ import submenu from "./submenu/index.vue";
 import tabbar from "./tabbar/index.vue";
 import scrollbar from "./scrollbar/index.vue";
 import chart from "./chart/index.vue";
+import pagination from "./pagination/index.vue";
 
 const components = [
     sidebar,
@@ -19,6 +20,7 @@ const components = [
     tabbar,
     scrollbar,
     chart,
+    pagination,
 ];
 
 const install: Component = (app: CompatVue) => {

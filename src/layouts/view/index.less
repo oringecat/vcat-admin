@@ -10,9 +10,18 @@
 
     &__header {
         display: flex;
-        margin-bottom: 16px;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
+
+        .left-panel {
+            margin-right: auto;
+            white-space: nowrap;
+            margin-bottom: 16px;
+        }
+
+        .right-panel {
+            margin-bottom: 16px;
+        }
     }
 
     &__footer {

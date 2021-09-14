@@ -8,7 +8,7 @@
                 <slot name="headerRight"></slot>
             </div>
         </div>
-        <div class="cat-view__container">
+        <div class="cat-view__container" v-loading="loading && showLoading" v-loading.fullscreen="fullLoading && showLoading">
             <slot></slot>
         </div>
         <div class="cat-view__footer" v-if="$slots['footer']">
@@ -24,10 +24,22 @@
      * date: 2021-08-28
      */
 
-    import { defineComponent } from "vue";
+    import { defineComponent, computed } from "vue";
+    import { store } from "@/store";
 
     export default defineComponent({
         name: "CatView",
+        props: {
+            loading: Boolean,
+            fullLoading: Boolean
+        },
+        setup() {
+            const showLoading = computed(() => store.state.app.loading);
+
+            return {
+                showLoading,
+            }
+        }
     });
 </script>
 

@@ -1,6 +1,6 @@
 ﻿const routes = {
     url: "/admin/routes",
-    type: "post",
+    type: "get",
     response: {
         code: 100,
         message: "success",
@@ -74,8 +74,8 @@
                 name: "Admin",
                 component: "layouts/page/index.vue",
                 meta: {
-                    icon: "el-icon-s-tools",
-                    title: "系统管理",
+                    icon: "el-icon-user-solid",
+                    title: "用户管理",
                 },
                 children: [
                     {
@@ -109,6 +109,30 @@
                         component: "views/admin/admin-role.vue",
                         meta: {
                             title: "管理员角色",
+                        },
+                    },
+                ],
+            },
+            {
+                id: 1009,
+                parentId: 0,
+                path: "/system",
+                redirect: "MenuIndex",
+                name: "System",
+                component: "layouts/page/index.vue",
+                meta: {
+                    icon: "el-icon-s-tools",
+                    title: "系统管理",
+                },
+                children: [
+                    {
+                        id: 1010,
+                        parentId: 1009,
+                        path: "menu",
+                        name: "MenuIndex",
+                        component: "views/system/menu-index.vue",
+                        meta: {
+                            title: "菜单管理",
                         },
                     }
                 ],

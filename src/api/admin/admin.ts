@@ -12,7 +12,9 @@ interface IAdmin {
     account?: string;
     password?: string;
     passwordHash?: string;
+    realName?: string;
     avatar?: string;
+    createdBy?: string
 }
 
 class Admin extends Model<IAdmin> implements IAdmin {
@@ -21,6 +23,8 @@ class Admin extends Model<IAdmin> implements IAdmin {
     password = "";
     passwordHash = "";
     avatar = "";
+    realName = "";
+    createdBy = "";
 
     constructor(data?: IAdmin) {
         super(data);

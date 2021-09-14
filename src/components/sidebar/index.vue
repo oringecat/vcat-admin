@@ -1,7 +1,7 @@
 ﻿<template>
     <el-scrollbar :class="[ 'cat-sidebar', modelValue && 'is-hide' ]" view-class="cat-sidebar__view">
         <div :class="[ 'cat-sidebar__header', modelValue && 'is-hide' ]">
-            <span class="logo">后台管理系统</span>
+            <span class="logo">橘猫后台管理系统</span>
         </div>
         <div class="cat-sidebar__menu">
             <el-menu :default-active="$route.name" :collapse="modelValue" @select="routerTo" unique-opened>
