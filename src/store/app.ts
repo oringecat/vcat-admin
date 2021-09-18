@@ -24,10 +24,14 @@ const app: Module<IAppState, IGlobalState> = {
             state.loading = value;
         },
         IS_MOBILE: (state) => {
-            const clientWidth = document.documentElement.clientWidth;
+            const classList = document.body.classList,
+                clientWidth = document.documentElement.clientWidth;
+
             if (clientWidth > 768) {
+                classList.remove("mobile");
                 state.isMobile = false;
             } else {
+                classList.add("mobile");
                 state.isMobile = true;
             }
         },
