@@ -3,8 +3,8 @@
         text: '柱状图'
     },
     grid: {
-        right: '4%',
-        bottom: '3%',
+        right: '5%',
+        bottom: '5%',
     },
     xAxis: {
         type: 'category',
